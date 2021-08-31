@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600&display=swap" rel="stylesheet">
+        <title>Programming Jokes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Rubik", sans-serif;
+        }
+
+        .container {
+            width: 100%;
+            height: 100vh;
+            display: grid;
+            place-items: center;
+            background-color: #7cffcb;
+            background-image: linear-gradient(315deg, #7cffcb 0%, #74f2ce 74%);
+        }
+        .container .box{
+            max-width: 600px;
+            width: 100%;
+            padding: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            box-shadow: .6rem 1rem 1.5rem rgba(0, 0, 0, 0.2);
+            margin: 0 1rem;
+            background-color: #fff;
+            border-radius: 10px;
+        }
+        .container .box .emoji{
+            font-size: 6rem;
+            margin-bottom: 2rem;
+        }
+        .container .box .joke{
+            font-size: 1.4rem;
+            text-align: center;
+            line-height: 1.6rem;
+            font-weight: 500;
+            margin-bottom: 2rem;
+        }
+        .container .box .jokeBnt{
+            font-size: 1.4rem;
+            border: none;
+            outline: none;
+            background-color: #29b67d;
+            cursor: pointer;
+            margin-top: 1rem;
+            color: #fff;
+            border-radius: 5px;
+            padding: .6rem 2rem;
+            box-shadow: .3rem .6rem 1rem rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="box">
+            <span class="emoji">&#128514</span>
+            <p class="joke"></p>
+            <button class="jokeBnt">Generate Joke</button>
+        </div>
+    </div>
+    <script>
+        let jokeBnt = document.querySelector(".jokeBnt");
+        let joke = document.querySelector(".joke");
+        let url = 'https://official-joke-api.appspot.com/jokes/programming/random';
+
+           async function generateJoke(url){
+            joke.innerHTML="Getting joke gor you..."
+              await  fetch(url).then(async (data)=>{
+                    return await data.json()
+                }).then((result)=>{
+                    joke.innerHTML = result[0].setup+"<br>"+result[0].punchline;
+                })
+            }
+            jokeBnt.addEventListener("click",(e)=>{
+                e.preventDefault();
+                generateJoke(url);
+            })
+            generateJoke(url);
+    </script>
+</body>
+
+</html>
